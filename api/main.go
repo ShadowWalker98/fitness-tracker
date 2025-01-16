@@ -3,9 +3,11 @@ package main
 import (
 	"FitnessTracker/internal/data"
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 type application struct {
@@ -48,17 +50,16 @@ func main() {
 
 	setupUsersTable(conn)
 
-	//
-	// srv := &http.Server{
-	// 	Addr:         fmt.Sprintf(":%d", app.config.port),
-	// 	Handler:      mux,
-	// 	IdleTimeout:  time.Minute,
-	// 	ReadTimeout:  10 * time.Second,
-	// 	WriteTimeout: 30 * time.Second,
-	// }
+	srv := &http.Server{
+		Addr:         fmt.Sprintf(":%d", app.config.port),
+		Handler:      mux,
+		IdleTimeout:  time.Minute,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 30 * time.Second,
+	}
 
 	// printing out the starting configuration
-	// logger.Printf("Starting server %s on port %s", cfg.env, srv.Addr)
-	// err := srv.ListenAndServe()
-	// log.Fatal(err)
+	logger.Printf("Starting server %s on port %s", cfg.env, srv.Addr)
+	err := srv.ListenAndServe()
+	log.Fatal(err)
 }
