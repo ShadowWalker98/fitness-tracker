@@ -57,8 +57,9 @@ func addUser(conn *sql.DB, user *User) error {
 	// adds a user to the database
 	passwordHash, salt := helpers.GetHash(user.Password)
 	ctx := context.TODO()
-	_, err := conn.ExecContext(ctx, addUserQuery, &user.FirstName, &user.LastName, &user.Email, passwordHash, salt)
+	_, err := conn.ExecContext(ctx, addUserQuery, &user.FirstName, &user.LastName, &user.Email, passwordHash)
 	if err != nil {
+		fmt.Println("Error occurred: ", err)
 		return err
 	}
 	fmt.Println("Hashed Password: " + passwordHash)

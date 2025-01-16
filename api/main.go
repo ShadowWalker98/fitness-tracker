@@ -44,6 +44,7 @@ func main() {
 		logger: logger,
 		mux:    mux,
 	}
+	app.routes()
 
 	conn := app.setupDB()
 	app.models = data.NewModels(conn)
